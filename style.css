@@ -28,3 +28,6 @@ img.original{
 div span{
     display:block;
 }
+.info {
+    text-align:left;
+}

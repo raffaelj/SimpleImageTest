@@ -32,6 +32,7 @@ $tests = [
 //  ['method' => ['arg1', 'arg2']  ],
   
     ['crop'       => [10, 10, 40, 40]],
+    // ['crop'       => [20, 20, 80, 80]],
     ['resize'     => [40, 80]],
     
     ['bestFit'    => [40, 80]],
@@ -45,6 +46,7 @@ $tests = [
     
     ['sharpen'    => [10]],
     ['sketch'     => []],
+    // ['opacity'     => [.5]],
     
 ];
 
@@ -75,6 +77,19 @@ foreach ($sorted as $file) {
     echo "<div>";
     echo "<p><b>".$file->getFilename()."</b></p>";
     echo "<div><img src='".$file->getPathname()."' class='original'></div>";
+    if ($info = getimagesize($file->getPathname())) {
+        echo "<div><p class='info'>";
+        foreach($info as $key => $val) {
+            switch($key) {
+              case '0': echo "<b>width:</b> $val<br>\r\n"; break;
+              case '1': echo "<b>height:</b> $val<br>\r\n"; break;
+              case '2': // skip the type number and width/height string
+              case '3': break;
+              default: echo "<b>$key:</b> $val<br>\r\n";
+            }
+        }
+    }
+    echo "</p></div>";
 
     foreach ($tests as $test) {
       
