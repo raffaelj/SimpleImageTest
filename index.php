@@ -20,7 +20,9 @@ $info = [
 <?php
 /******************* SimpleImage Tests *******************/
 
-require_once('SimpleImage.php');
+// require_once('SimpleImage.php');
+// require_once('SimpleImage3.3.3.php');
+require_once('SimpleImageFixTranspRj.php');
 
 // input and output dirs
 $input = 'input';
@@ -31,22 +33,54 @@ $tests = [
 
 //  ['method' => ['arg1', 'arg2']  ],
   
-    ['crop'       => [10, 10, 40, 40]],
+    // ['crop'       => [10, 10, 40, 40]],
+    ['crop'       => [10, 20, 60, 90]],
     // ['crop'       => [20, 20, 80, 80]],
     ['resize'     => [40, 80]],
     
-    ['bestFit'    => [40, 80]],
+    // ['bestFit'    => [40, 80]],
     ['thumbnail'  => [60, 60, 'center']],
     
     ['rotate'     => [10]],
-    ['rotate'     => [45]],
-    ['rotate'     => [90]],
+    // ['rotate'     => [45]],
+    // ['rotate'     => [90]],
     // ['rotate'     => [180]],
-    ['rotate'     => [45, 'green']],
     
+    // ['autoOrient' => []],
+    // ['bestFit'    => [40, 80]], // bestFit($maxWidth, $maxHeight)
+    // ['crop'       => [20, 20, 80, 80]], // crop($x1, $y1, $x2, $y2)
+    // ['flip'       => ['x']], // flip($direction) - x|y|both
+    
+    // ['maxColors'  => [256, true]], // maxColors($max, $dither)
+    // ['overlay'   => [/* ... */]], // overlay($overlay, $anchor, $opacity, $xOffset, $yOffset)
+    // ['resize'     => [40, 80]], // resize($width, $height)
+    ['rotate'     => [45, 'green']], // rotate($angle, $backgroundColor)
+    // ['text'     => [/* ... */]], // text($text, $options, &$boundary)
+    // ['thumbnail'  => [60, 60, 'center']], // thumbnail($width, $height, $anchor)
+    
+    // drawing
+    // to do ...
+    
+    // filters
+    ['blur'       => ['gaussian', 1]], // blur($type, $passes)
+    ['brighten'   => [50]], // brighten($percentage)
+    // ['colorize'  => [/* ... */]], // colorize($color)
+    ['contrast'   => [50]], // contrast($percentage)
+    ['darken'     => [50]], // darken($percentage)
+    ['desaturate'     => []],
+    // ['duotone'     => [/* ... */]], // duotone($lightColor, $darkColor)
+    ['edgeDetect'     => []],
+    ['emboss'     => []],
+    ['invert'     => []],
+    ['opacity'    => [.5]],
+    ['pixelate'    => [10]],
+    ['sepia'     => []],
     ['sharpen'    => [10]],
     ['sketch'     => []],
-    // ['opacity'     => [.5]],
+    
+    // deprecated
+    // ['fitToHeight'    => [40]], // fitToHeight($height)
+    // ['fitToWidth'    => [40]], // fitToWidth($width)
     
 ];
 
@@ -67,7 +101,8 @@ foreach ($dir as $file) {
     $sorted[] = new \SPLFileObject($file->getPathname());
 }
 usort($sorted, function($a, $b){
-    return strcmp($a->getFilename(), $b->getFilename());
+    // return strcmp($a->getFilename(), $b->getFilename());
+    return strcmp(getimagesize($a->getPathname())['bits'], getimagesize($b->getPathname())['bits']);
 });
 
 
